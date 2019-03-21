@@ -32,7 +32,7 @@ final demoPlaylist = new DemoPlaylist(songs: [
 //return mUrls;
 
   new DemoSong(
-      audioUrl: 'www.baidu.com',
+      audioUrl: 'http://win.web.ri01.sycdn.kuwo.cn/78bcdc6ffad9222c547f1e710cc3fb2d/5c937b08/resource/n3/25/96/2243055394.mp3',
       albumArtUrl:'http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg',
       songTitle: 'sss',
       artist: 'hhh'),
