@@ -34,13 +34,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-
   double _seekPercent;
 
   @override
   Widget build(BuildContext context) {
-    return new Audio(
-      audioUrl: demoPlaylist.songs[0].audioUrl,
+    return new AudioPlaylist(
+      playlist: demoPlaylist.songs.map((DemoSong song) {
+        return song.audioUrl;
+      }).toList(growable: false),
       playbackState: PlaybackState.paused,
       child: new Scaffold(
         appBar: new AppBar(
@@ -67,23 +68,25 @@ class MyHomePageState extends State<MyHomePage> {
                   WatchableAudioProperties.audioPlayhead,
                   WatchableAudioProperties.audioSeeking,
                 ],
-                playerBuilder:
-                    (BuildContext context, AudioPlayer player, Widget child) {
+                playerBuilder: (BuildContext context, AudioPlayer player, Widget child) {
                   double playbackProgress = 0.0;
                   if (player.audioLength != null && player.position != null) {
-                    playbackProgress = player.position.inMilliseconds /
-                        player.audioLength.inMilliseconds;
+                    playbackProgress = player.position.inMilliseconds / player.audioLength.inMilliseconds;
                   }
 
                   _seekPercent = player.isSeeking ? _seekPercent : null;
+                  print('_seekPercent:'+_seekPercent.toString());
+
 
                   return new RadialSeekBar(
                     progress: playbackProgress,
                     seekPercent: _seekPercent,
-                    onSeekRequested: (double seekPercent){
+                    onSeekRequested: (double seekPercent) {
                       setState(() => _seekPercent = seekPercent);
-                      final seekMillis = (player.audioLength.inMilliseconds*seekPercent).round();
+                      print('player.audioLength.inMilliseconds:'+player.audioLength.inMilliseconds.toString()+'\n'+' seekPercent:'+seekPercent.toString());
+                      final seekMillis = (player.audioLength.inMilliseconds * seekPercent).round();
                       player.seek(new Duration(microseconds: seekMillis));
+                      print('seekMillis:'+seekMillis.toString());
                     },
                   );
                 },
@@ -103,46 +106,21 @@ class MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(MyHomePage oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
 }
 
 class RadialSeekBar extends StatefulWidget {
-  final double seekPercent;
   final double progress;
+  final double seekPercent;
   final Function(double) onSeekRequested;
 
   RadialSeekBar({
-    this.seekPercent = 0.0,
     this.progress = 0.0,
+    this.seekPercent = 0.0,
     this.onSeekRequested,
   });
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
+  RadialSeekBarState createState() {
     return new RadialSeekBarState();
   }
 }
@@ -165,13 +143,13 @@ class RadialSeekBarState extends State<RadialSeekBar> {
     _progress = widget.progress;
   }
 
-  void _onDragStart(PolarCoord startCoord) {
-    _startDragCoord = startCoord;
+  void _onDragStart(PolarCoord coord) {
+    _startDragCoord = coord;
     _startDragPercent = _progress;
   }
 
-  void _onDragUpdate(PolarCoord updateCoord) {
-    final dragAngle = updateCoord.angle - _startDragCoord.angle;
+  void  _onDragUpdate(PolarCoord coord) {
+    final dragAngle = coord.angle - _startDragCoord.angle;
     final dragPercent = dragAngle / (2 * pi);
 
     setState(() => _currentDragPercent = (_startDragPercent + dragPercent) % 1.0);
@@ -191,9 +169,9 @@ class RadialSeekBarState extends State<RadialSeekBar> {
   @override
   Widget build(BuildContext context) {
     double thumbPosition = _progress;
-    if(_currentDragPercent != null){
+    if (_currentDragPercent != null) {
       thumbPosition = _currentDragPercent;
-    }else if (widget.seekPercent !=null){
+    } else if (widget.seekPercent != null) {
       thumbPosition = widget.seekPercent;
     }
 
@@ -277,15 +255,15 @@ class RadialProgressBarState extends State<RadialProgressBar> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.progressPercent);
+
     return Padding(
       padding: widget.outerPadding,
       child: new CustomPaint(
         foregroundPainter: new RadialSeekBarPainter(
             trackWidth: widget.trackWidth,
             trackColor: widget.trackColor,
-            progressColor: widget.progressColor,
             progressWidth: widget.progressWidth,
+            progressColor: widget.progressColor,
             progressPercent: widget.progressPercent,
             thumbSize: widget.thumbSize,
             thumbColor: widget.thumbColor,

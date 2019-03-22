@@ -32,23 +32,18 @@ final demoPlaylist = new DemoPlaylist(songs: [
 //return mUrls;
 
   new DemoSong(
-      audioUrl: 'http://win.web.ri01.sycdn.kuwo.cn/78bcdc6ffad9222c547f1e710cc3fb2d/5c937b08/resource/n3/25/96/2243055394.mp3',
+      audioUrl: 'http://m10.music.126.net/20190322172433/21b6bc07e283b62d8b29cdb84eae0bf6/ymusic/040c/540c/525b/3fd59c6b4acf334a8773e1056980ad34.mp3',
       albumArtUrl:'http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg',
       songTitle: 'sss',
       artist: 'hhh'),
   new DemoSong(
-      audioUrl: 'www.baidu.com',
-      albumArtUrl: 'http://c.hiphotos.baidu.com/image/pic/item/30adcbef76094b36de8a2fe5a1cc7cd98d109d99.jpg',
+      audioUrl: 'http://win.web.ra01.sycdn.kuwo.cn/e846d656b13931b8ce49da86118e863e/5c948994/resource/n1/2011/06/24/4197634075.mp3',
+      albumArtUrl: 'http://a.hiphotos.baidu.com/image/pic/item/e824b899a9014c087eb617650e7b02087af4f464.jpg',
       songTitle: 'hhh',
       artist: 'hhh'),
   new DemoSong(
-      audioUrl: 'www.baidu.com',
-      albumArtUrl: 'www.baidu.com',
-      songTitle: 'hhh',
-      artist: 'hhh'),
-  new DemoSong(
-      audioUrl: 'www.baidu.com',
-      albumArtUrl: 'www.baidu.com',
+      audioUrl: 'http://win.web.re01.sycdn.kuwo.cn/1d4d8ce9b8f4a5bda95de179c5b5965e/5c9489c3/resource/n2/67/84/1771584210.mp3',
+      albumArtUrl: 'http://g.hiphotos.baidu.com/image/pic/item/6d81800a19d8bc3e770bd00d868ba61ea9d345f2.jpg',
       songTitle: 'hhh',
       artist: 'hhh'),
 ]);
